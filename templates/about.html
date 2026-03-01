@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+.about-section {
+    padding: 5rem 5%;
+    position: relative;
+    z-index: 10;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.section-title span {
+    color: var(--accent-secondary);
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-img {
+    flex: 1;
+    position: relative;
+}
+
+.about-img img {
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(188, 19, 254, 0.3);
+    border: 2px solid var(--accent-primary);
+    width: 100%;
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text h3 {
+    font-size: 2rem;
+    color: var(--accent-primary);
+    margin-bottom: 1.5rem;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.skills-container {
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.skill-tag {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 204, 0.1);
+    color: var(--accent-primary);
+    border: 1px solid var(--accent-primary);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+
+<section class="about-section">
+    <h2 class="section-title">About <span>Us</span></h2>
+    <div class="about-content">
+        <div class="about-img">
+            <img src="{% static 'images/image2.jpg' %}" alt="About" onerror="this.src='https://via.placeholder.com/600x600/1a1b26/bc13fe?text=About+Dilkhush'">
+        </div>
+        <div class="about-text">
+            <h3>Turning Ideas into Impact Across Multiple Domains</h3>
+            <p>I am a multifaceted tech professional with deep expertise spanning across Cybersecurity, Data Analytics, Python Backend Development, Artificial Intelligence, and Data Science. My drive is to architect robust, data-backed, and secure systems from the ground up.</p>
+            <p>Whether I am cleaning data to find business value, building scalable microservices and APIs, training deep learning neural networks, or securing networks against vulnerabilities, my overarching goal is to bridge the gap between complex theory and high-performing digital realities.</p>
+            <div class="skills-container">
+                <span class="skill-tag">Cybersecurity</span>
+                <span class="skill-tag">AI & ML Engineer</span>
+                <span class="skill-tag">Data Scientist</span>
+                <span class="skill-tag">Data Analytics</span>
+                <span class="skill-tag">Python Backend</span>
+                <span class="skill-tag">Django & FastAPI</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    gsap.from(".about-img", {
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+    });
+    gsap.from(".about-text", {
+        x: 50,
+        opacity: 0,
+        duration: 1,
+        delay: 0.2,
+        ease: "power3.out"
+    });
+    gsap.from(".skill-tag", {
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        delay: 0.8,
+        ease: "power2.out"
+    });
+</script>
+{% endblock %}

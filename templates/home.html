@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+/* Energetic Hero Styles */
+.hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 5%;
+    position: relative;
+    overflow: hidden;
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Set behind everything else, but above hero-bg */
+}
+
+.hero-bg {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 255, 204, 0.1) 0%, rgba(13, 14, 21, 1) 40%);
+    animation: rotateBg 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes rotateBg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    z-index: 2;
+    gap: 4rem;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-greeting {
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.highlight {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(188, 19, 254, 0.5);
+    display: inline-block;
+    border-right: 4px solid var(--accent-primary);
+    white-space: nowrap;
+    /* padding-right: 5px; */
+    vertical-align: bottom;
+    animation: blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { border-color: transparent }
+    50% { border-color: var(--accent-primary); }
+}
+
+.hero-tagline {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    line-height: 1.8;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* Orbit Animation Setup */
+.lab-orbit-wrapper {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-image {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 4px solid var(--accent-primary);
+    box-shadow: 0 0 30px rgba(0, 255, 204, 0.6), inset 0 0 20px rgba(0, 255, 204, 0.5);
+    z-index: 10;
+    position: relative;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.center-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px rgba(188, 19, 254, 0.8), inset 0 0 30px rgba(188, 19, 254, 0.6);
+    border-color: var(--accent-secondary);
+}
+
+.lab-orbit {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    animation: orbit 25s linear infinite;
+}
+
+@keyframes orbit {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.image-container {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 50%;
+    left: 50%;
+    margin: -40px;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-secondary);
+    box-shadow: 0 0 15px rgba(188, 19, 254, 0.7);
+    animation: anti-orbit 25s linear infinite;
+}
+
+@keyframes anti-orbit {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+.image-container:nth-child(1) { transform: rotate(0deg) translate(250px); }
+.image-container:nth-child(2) { transform: rotate(72deg) translate(250px); }
+.image-container:nth-child(3) { transform: rotate(144deg) translate(250px); }
+.image-container:nth-child(4) { transform: rotate(216deg) translate(250px); }
+.image-container:nth-child(5) { transform: rotate(288deg) translate(250px); }
+
+@media (max-width: 900px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-greeting {
+        font-size: 3rem;
+        margin: 0 auto 1rem auto;
+    }
+    .hero-description {
+        margin: 0 auto 3rem auto;
+    }
+    .hero-cta {
+        justify-content: center;
+    }
+    .lab-orbit-wrapper {
+        transform: scale(0.65);
+        margin-top: -30px;
+    }
+}
+@media (max-width: 480px) {
+    .lab-orbit-wrapper {
+        transform: scale(0.5);
+        margin-top: -80px;
+    }
+    .hero-greeting {
+        font-size: 2.2rem;
+    }
+    .hero-tagline {
+        font-size: 1.5rem;
+    }
+}
+</style>
+
+<section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div id="particles-js"></div>
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-greeting">Hi, I'm <br><span class="highlight">DILKHUSH</span></h1>
+            <h2 class="hero-tagline">Tech Innovator & Problem Solver!</h2>
+            <p class="hero-description">
+                A passionate professional spanning across multiple technical domains including Cybersecurity, Data Analytics, Python Backend Development, and AI/ML Engineering. 
+                I exist to bridge complex theories into actionable digital realities.
+            </p>
+            <div class="hero-cta">
+                <a href="{% url 'contact' %}" class="btn btn-primary">Contact Me</a>
+                <a href="#" class="btn btn-outline">Resume</a>
+            </div>
+        </div>    
+        <div class="lab-orbit-wrapper">
+            <img src="{% static 'images/image2.jpg' %}" alt="Dilkhush" class="center-image" onerror="this.src='https://via.placeholder.com/220/0d0e15/00ffcc?text=DK'">
+            <div class="lab-orbit">
+                <div class="image-container"><img src="{% static 'images/python.jpeg' %}" alt="Python"></div>
+                <div class="image-container"><img src="{% static 'images/download.jpeg' %}" alt="SQL"></div>
+                <div class="image-container"><img src="{% static 'images/download (1).jpeg' %}" alt="Machine Learning"></div>
+                <div class="image-container"><img src="{% static 'images/OIP (1).jpeg' %}" alt="Power BI"></div>
+                <div class="image-container"><img src="{% static 'images/OIP (2).jpeg' %}" alt="Analytics"></div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    gsap.from(".hero-content > *", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        delay: 0.6,
+        ease: "power4.out"
+    });
+    gsap.from(".lab-orbit-wrapper", {
+        scale: 0.5,
+        opacity: 0,
+        duration: 1.5,
+        delay: 1,
+        ease: "back.out(1.7)"
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+    particlesJS("particles-js", {
+        "particles": {
+            "number": {
+                "value": 80,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": ["#00ffcc", "#bc13fe"]
+            },
+            "shape": {
+                "type": "circle",
+            },
+            "opacity": {
+                "value": 0.5,
+                "random": true,
+                "anim": {
+                    "enable": true,
+                    "speed": 1,
+                    "opacity_min": 0.1,
+                    "sync": false
+                }
+            },
+            "size": {
+                "value": 3,
+                "random": true,
+            },
+            "line_linked": {
+                "enable": true,
+                "distance": 150,
+                "color": "#00ffcc",
+                "opacity": 0.2,
+                "width": 1
+            },
+            "move": {
+                "enable": true,
+                "speed": 2,
+                "direction": "none",
+                "random": true,
+                "straight": false,
+                "out_mode": "bounce",
+                "bounce": false,
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                    "enable": true,
+                    "mode": "grab"
+                },
+                "onclick": {
+                    "enable": true,
+                    "mode": "push"
+                },
+                "resize": true
+            },
+            "modes": {
+                "grab": {
+                    "distance": 140,
+                    "line_linked": {
+                        "opacity": 0.8
+                    }
+                },
+                "push": {
+                    "particles_nb": 4
+                }
+            }
+        },
+        "retina_detect": true
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const highlightEl = document.querySelector('.highlight');
+        const words = ["DILKHUSH", "Cybersecurity", "Data Analytics", "Backend Developer", "AI/ML Engineering"];
+        let wordIndex = 0;
+        let charIndex = words[0].length;
+        let isDeleting = true;
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                charIndex--;
+            } else {
+                charIndex++;
+            }
+            
+            highlightEl.textContent = currentWord.substring(0, charIndex);
+
+            let typeSpeed = isDeleting ? 70 : 120;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                setTimeout(() => {
+                    isDeleting = true;
+                    typeEffect();
+                }, 2000);
+                return;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                setTimeout(typeEffect, 500);
+                return;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+        
+        // Start typing effect after initial GSAP arrival and viewing time
+        setTimeout(typeEffect, 3000);
+    });
+</script>
+{% endblock %}

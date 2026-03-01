@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+.projects-section {
+    padding: 5rem 5%;
+    position: relative;
+    z-index: 10;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.section-title span {
+    color: var(--accent-primary);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.project-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--card-border);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 255, 204, 0.2);
+    border-color: var(--accent-primary);
+}
+
+.project-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    padding: auto;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-img {
+    transform: scale(1.1);
+    border-radius: 10px;
+}
+
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 14, 21, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    backdrop-filter: blur(3px);
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.detail-btn {
+    padding: 0.8rem 2rem;
+    background: var(--accent-secondary);
+    color: white;
+    border-radius: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 15px rgba(188, 19, 254, 0.5);
+    display: inline-block;
+    margin-top: auto;
+}
+
+.detail-btn:hover {
+    background: var(--accent-primary);
+    color: var(--bg-color);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+}
+
+.project-info {
+    padding: 2rem;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.project-title {
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 1200px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<section class="projects-section">
+    <h2 class="section-title">My <span>Projects</span></h2>
+    <div class="projects-grid">
+        {% for project in projects %}
+        <div class="project-card">
+            <div class="project-img-wrapper">
+                {% if project.cover_image %}
+                    <img src="{{ project.cover_image.url }}" alt="{{ project.title }}" class="project-img">
+                {% else %}
+                    <img src="https://via.placeholder.com/600x400/1a1b26/00ffcc?text={{ project.title|urlencode }}" alt="{{ project.title }}" class="project-img">
+                {% endif %}
+                <!-- <div class="project-overlay">
+                    <a href="{% url 'project_detail' project.slug %}" class="detail-btn">Detail View</a>
+                </div> -->
+            </div>
+            <div class="project-info">
+                <h3 class="project-title">{{ project.title }}</h3>
+                <div class="project-meta-lite" style="margin-bottom: 1.5rem; color: var(--accent-primary); font-size: 0.9rem;">
+                    {% if project.time_spent %}<i class="fa-regular fa-clock"></i> {{ project.time_spent }} &nbsp;&nbsp;{% endif %}
+                    {% if project.file_size %}<i class="fa-solid fa-database"></i> {{ project.file_size }}{% endif %}
+                </div>
+                <a href="{% url 'project_detail' project.slug %}" class="detail-btn">Detail View</a>
+            </div>
+        </div>
+        {% empty %}
+        <p style="text-align:center; width:100%; grid-column: 1/-1;">No projects added yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+    gsap.from(".section-title", {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+            trigger: ".projects-section",
+            start: "top 80%"
+        }
+    });
+
+    gsap.from(".project-card", {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.3,
+        scrollTrigger: {
+            trigger: ".projects-grid",
+            start: "top 85%"
+        }
+    });
+</script>
+{% endblock %}
